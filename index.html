@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<meta name="color-scheme" content="light dark"/>
+<link rel="icon" href="data:,"/>
+<title>Faracta — Permit Intelligence for Contractors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800;900&family=IBM+Plex+Mono:wght@500;600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f5f0; --bg2:#ffffff; --surface:#ffffff; --surface2:#f0ede6;
+  --ink:#14201d; --ink2:#3d4a46; --muted:#6b7a75; --line:#ddd8cc;
+  --accent:#c75a12; --accent2:#164a44; --accent-soft:#fdf0e3; --teal-soft:#e6f0ee;
+  --radius:18px;
+}
+@media(prefers-color-scheme:dark){
+  :root{ --bg:#0e1513; --bg2:#121c19; --surface:#16211e; --surface2:#1c2a26; --ink:#eef2ef; --ink2:#c2cfc9; --muted:#8da09a; --line:#2a3a35; --accent:#f08a3c; --accent2:#7ec8bc; --accent-soft:#2e2116; --teal-soft:#1a332f; }
+}
+*{box-sizing:border-box} html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Archivo",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.topbar{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%, transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.topbar-in{display:flex;align-items:center;justify-content:space-between;padding:14px 0;gap:16px}
+.logo{font-weight:900;letter-spacing:.08em;font-size:22px} .logo span{color:var(--accent)}
+.logo small{display:block;letter-spacing:.14em;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;margin-top:1px}
+.nav{display:none;gap:28px;font-size:14px;font-weight:600;color:var(--ink2)} @media(min-width:800px){.nav{display:flex}}
+.hero{padding:52px 0 28px}
+.hero-grid{display:grid;gap:36px} @media(min-width:900px){.hero-grid{grid-template-columns:1.05fr .95fr;align-items:start}}
+.eyebrow{font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+h1{font-size:clamp(38px,6vw,62px);line-height:.95;letter-spacing:-.03em;margin:14px 0 18px;font-weight:900}
+h1 em{font-family:"Source Serif 4",serif;font-weight:600;font-style:italic;letter-spacing:-.02em}
+.lede{font-size:18px;line-height:1.6;color:var(--ink2);max-width:560px}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px;align-items:center}
+.btn{border:none;cursor:pointer;min-height:52px;padding:0 22px;border-radius:999px;font-weight:800;font-size:15px;display:inline-flex;align-items:center;justify-content:center;gap:8px;text-decoration:none}
+.btn-primary{background:var(--ink);color:var(--bg)} .btn-primary:hover{background:var(--accent2)}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.micro{font-size:13px;color:var(--muted);margin-top:12px}
+.micro strong{color:var(--ink)}
+/* digest card */
+.digest-card{background:var(--surface);border:1px solid var(--line);border-radius:20px;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.08)}
+.digest-head{padding:18px 20px 14px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+.digest-head b{font-size:13px;letter-spacing:.08em;text-transform:uppercase}
+.digest-head p{margin:2px 0 0;font-size:13px;color:var(--muted)}
+.time-badge{font-family:"IBM Plex Mono",monospace;font-size:12px;background:var(--teal-soft);color:var(--accent2);padding:6px 10px;border-radius:999px;white-space:nowrap;font-weight:600}
+.tabs{display:flex;gap:8px;padding:14px 16px 6px;flex-wrap:wrap}
+.tab{min-height:40px;padding:0 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface2);font-weight:700;font-size:13px;cursor:pointer}
+.tab.active{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.rows{padding:8px 12px 12px}
+.row{display:flex;gap:14px;padding:14px 10px;border-bottom:1px solid var(--line);align-items:flex-start}
+.row:last-child{border:none}
+.dot{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:16px;flex-shrink:0}
+.dot.r{background:#fde8d6} .dot.s{background:#fef3c7} .dot.h{background:#dbeafe}
+.row b{font-size:14px;line-height:1.3;display:block}
+.row p{margin:3px 0 0;font-size:13px;color:var(--muted);line-height:1.45}
+.row-meta{margin-left:auto;text-align:right;flex-shrink:0}
+.row-meta span{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--muted);display:block}
+.pill-open{font-size:11px;font-weight:800;letter-spacing:.04em;text-transform:uppercase;background:#dcfce7;color:#166534;padding:4px 7px;border-radius:999px;display:inline-block;margin-top:6px}
+.digest-foot{padding:14px 20px;background:var(--surface2);font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:16px;overflow:hidden;margin:28px 0}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}}
+.stat{background:var(--surface);padding:20px}
+.stat strong{font-size:32px;letter-spacing:-.03em;display:block;line-height:1}
+.stat span{font-size:13px;color:var(--muted);line-height:1.4;display:block;margin-top:6px}
+section{padding:42px 0}
+.sec-head{max-width:680px}
+.sec-head h2{font-size:clamp(28px,4vw,40px);line-height:1.05;letter-spacing:-.03em;margin:10px 0 12px}
+.sec-head p{color:var(--ink2);font-size:16px}
+.grid2{display:grid;gap:16px;margin-top:26px} @media(min-width:760px){.grid2{grid-template-columns:1fr 1fr}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:24px}
+.card h3{margin:0 0 8px;font-size:18px;letter-spacing:-.01em}
+.card p{margin:0;color:var(--ink2);font-size:15px;line-height:1.6}
+.card-num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--accent);font-weight:600;margin-bottom:14px;display:block}
+/* why */
+.why-grid{display:grid;gap:28px} @media(min-width:900px){.why-grid{grid-template-columns:1.15fr .85fr}}
+.callout{background:var(--accent2);color:#fff;border-radius:20px;padding:28px}
+@media(prefers-color-scheme:dark){.callout{background:#1d3d38}}
+.callout strong{font-size:52px;line-height:1;letter-spacing:-.03em;display:block}
+.callout p{opacity:.9;line-height:1.6}
+.alt-list{margin-top:20px;display:grid;gap:10px}
+.alt{display:flex;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;font-size:14px;color:var(--ink2)}
+.alt b{color:var(--ink)}
+/* sample map */
+.sample{background:var(--ink);color:#eef2ef;border-radius:24px;overflow:hidden}
+@media(prefers-color-scheme:dark){.sample{background:#0a0f0e;border:1px solid var(--line)}}
+.sample-in{padding:28px}
+@media(min-width:800px){.sample-in{padding:36px}}
+.sample h2{color:#fff;margin:8px 0 8px}
+.sample p{color:#b9c6c1}
+.sample-grid{display:grid;gap:24px;margin-top:24px} @media(min-width:900px){.sample-grid{grid-template-columns:1fr 1fr}}
+.map-box{background:#162622;border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:20px;min-height:300px;position:relative;overflow:hidden}
+.map-box::before{content:"";position:absolute;inset:0;background-image:radial-gradient(rgba(255,255,255,.14) 1px, transparent 1px);background-size:22px 22px;opacity:.5}
+.region{position:absolute;font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:6px 9px;border-radius:999px;color:#fff;z-index:2}
+.pin{position:absolute;width:10px;height:10px;border-radius:50%;border:2px solid #0e1513;z-index:1}
+.bar-row{margin-bottom:18px}
+.bar-label{display:flex;justify-content:space-between;font-size:14px;margin-bottom:8px}
+.bar-label b{color:#fff} .bar-label span{font-family:"IBM Plex Mono",monospace;color:#a7bab3}
+.bar{height:10px;background:rgba(255,255,255,.12);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;border-radius:999px;transition:width .5s ease}
+.filter-btns{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+.fbtn{min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff;font-weight:700;cursor:pointer;font-size:13px}
+.fbtn.active{background:#fff;color:#111}
+/* numbers */
+.num-grid{display:grid;gap:16px;margin-top:24px} @media(min-width:800px){.num-grid{grid-template-columns:1fr 1fr}}
+.season{display:flex;align-items:end;gap:12px;height:140px;margin-top:18px}
+.season-col{flex:1;text-align:center}
+.season-bar{border-radius:10px 10px 4px 4px;margin:0 auto;width:100%}
+.season-col b{display:block;margin-top:8px;font-size:14px} .season-col span{font-size:12px;color:var(--muted)}
+/* pricing */
+.price-grid{display:grid;gap:16px;margin-top:26px} @media(min-width:760px){.price-grid{grid-template-columns:1fr 1fr}}
+.price{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:26px;position:relative}
+.price.featured{border:2px solid var(--ink)}
+.price .amt{font-size:48px;letter-spacing:-.04em;font-weight:900;line-height:1}
+.price .amt small{font-size:16px;font-weight:600;color:var(--muted);letter-spacing:0}
+.badge{position:absolute;top:18px;right:18px;background:var(--accent);color:#fff;font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:6px 9px;border-radius:999px}
+.checklist{list-style:none;padding:0;margin:18px 0;display:grid;gap:10px;font-size:14.5px;color:var(--ink2)}
+.checklist li{display:flex;gap:10px} .checklist li::before{content:"✓";font-weight:900;color:var(--accent2)}
+/* faq */
+.faq{margin-top:22px;border-top:1px solid var(--line)}
+details{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;list-style:none;padding:20px 4px;font-weight:700;font-size:16px;display:flex;justify-content:space-between;gap:16px;min-height:56px;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:22px;color:var(--accent);flex-shrink:0}
+details[open ] summary::after{content:"−"}
+details p{margin:0;padding:0 4px 20px;color:var(--ink2);max-width:720px;line-height:1.65;font-size:15px}
+.final{background:var(--accent-soft);border:1px solid var(--line);border-radius:24px;padding:36px 28px;text-align:center}
+.final h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.03em;line-height:1.05;margin:0 0 14px}
+footer{padding:28px 0 40px;border-top:1px solid var(--line);margin-top:20px}
+.foot{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+<header class="topbar"><div class="wrap topbar-in">
+  <div class="logo">FARACTA<span>.</span><small>Permit intelligence for contractors</small></div>
+  <nav class="nav"><a href="#what">What you get</a><a href="#sample">Sample day</a><a href="#numbers">The numbers</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></nav>
+  <a class="btn btn-primary" href="#pricing" style="min-height:44px;padding:0 18px;font-size:14px">Start your free 14 days</a>
+</div></header>
+
+<main class="wrap">
+  <!-- HERO -->
+  <div class="hero"><div class="hero-grid">
+    <div>
+      <div class="eyebrow">Sacramento · Placer County · Stockton — nightly</div>
+      <h1>Every new permit in your trade. <em>In your inbox tomorrow morning.</em></h1>
+      <p class="lede">Faracta pulls every new building permit filed in the City of Sacramento, Placer County, and Stockton each night, sorts them by trade, and sends your trade's filings at 6 AM — every one with a one-tap map link, ordered by the street clusters where work is bunching.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="#pricing">Start your free 14 days →</a>
+        <a class="btn btn-ghost" href="#sample">See a sample day ↓</a>
+      </div>
+      <p class="micro"><strong>$49/mo per trade</strong> after the trial. Cancel anytime. No contract.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:20px">
+        <span style="font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px">✓ Filed yesterday → in tomorrow's digest</span>
+        <span style="font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px">✓ No homeowner contact lists sold</span>
+        <span style="font-size:12px;font-weight:700;border:1px solid var(--line);background:var(--surface);padding:7px 10px;border-radius:999px">✓ Permit number on every listing</span>
+      </div>
+    </div>
+
+    <div class="digest-card" aria-label="Sample digest preview">
+      <div class="digest-head"><div><b>Tomorrow · 6:00 AM digest</b><p>Your trade, your ZIPs — example format</p></div><span class="time-badge">NIGHTLY PULL</span></div>
+      <div class="tabs" role="tablist">
+        <button class="tab active" data-tab="roofing">Roofing</button>
+        <button class="tab" data-tab="solar">Solar</button>
+        <button class="tab" data-tab="hvac">HVAC</button>
+      </div>
+      <div class="rows" id="digestRows"></div>
+      <div class="digest-foot"><span>Address · permit no. · scope · status · work description on every row</span><span style="font-weight:700;color:var(--ink)">Sample format</span></div>
+    </div>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><strong>123</strong><span>New residential filings on one ordinary day — Tue, Nov 10, 2026</span></div>
+    <div class="stat"><strong>6 AM</strong><span>Digest lands before the day starts, pulled nightly from the portals</span></div>
+    <div class="stat"><strong>1 in 5</strong><span>Sacramento roofing filings arrive with no contractor attached yet</span></div>
+    <div class="stat"><strong>$49</strong><span>Per trade, per month — vs. $30–$60 for a single shared lead</span></div>
+  </div>
+  </div>
+
+  <!-- WHAT YOU GET -->
+  <section id="what">
+    <div class="sec-head"><div class="eyebrow">What you get</div><h2>Not a portal. A morning brief for your trade.</h2><p>The details you'd otherwise dig out one record at a time — already sorted, filtered, and ready before your first coffee.</p></div>
+    <div class="grid2">
+      <article class="card"><span class="card-num">01 — DAILY DIGEST</span><h3>The daily digest</h3><p>Yesterday's filings for your trade, in your inbox before the day starts: address, permit number, scope of work, status, and the permit's own description of the job — tear-off with 25 squares, 3-ton heat pump change-out, 6.4 kW PV with storage.</p></article>
+      <article class="card"><span class="card-num">02 — MAPPED FOR THE FIELD</span><h3>Mapped and ordered for the field</h3><p>Every filing in the digest carries a one-tap map link — tap it and you're looking at the job site. And the daily queue is ordered by street cluster, so the blocks where work is bunching come first: the neighborhood where six roofs got filed in a week is a neighborhood where every roof is that age. <em>Below: one real day's filings, plotted.</em></p></article>
+      <article class="card"><span class="card-num">03 — YOUR TRADE, YOUR ZIPS</span><h3>Your trade, your ZIPs</h3><p>Pick roofing, solar, or HVAC. Filter by ZIP if you only want your side of the metro. One subscription covers the whole coverage area — we don't sell the same month three times by slicing it into counties.</p></article>
+      <article class="card"><span class="card-num">04 — FRESHNESS</span><h3>Filed yesterday means filed yesterday</h3><p>Permits appear in our feed the morning after they're filed. The City of Sacramento's own open-data file runs two to three weeks behind the permit portal; the big national services refresh weekly or less. We pull from the portals nightly, so Monday's filings are in Tuesday's digest.</p></article>
+    </div>
+  </section>
+
+  <!-- WHY -->
+  <section>
+    <div class="why-grid">
+      <div>
+        <div class="eyebrow">Why contractors pay for this</div>
+        <h2 style="font-size:clamp(28px,4vw,38px);line-height:1.08;letter-spacing:-.03em;margin:10px 0 14px">A filed permit is a job that's already decided.</h2>
+        <p style="color:var(--ink2);font-size:16px;line-height:1.65">Funded, scoped, and located. The homeowner has started a $10–20k purchase — the only question is who gets to them first. Most contractors find out when a competitor's truck is already on the street.</p>
+        <p style="color:var(--ink2);font-size:16px;line-height:1.65">You're not buying data. You're buying the portal hour back, and first position on the jobs that are still open. One extra job a year that you got to first pays for roughly a decade of Faracta.</p>
+        <div class="alt-list">
+          <div class="alt"><span>✕</span><p style="margin:0"><b>The portal grind</b> — an hour a day across three portals. Nobody keeps that up.</p></div>
+          <div class="alt"><span>✕</span><p style="margin:0"><b>Shared leads</b> — sold to several competitors at once, often days old, $30–$60 each.</p></div>
+          <div class="alt"><span>✕</span><p style="margin:0"><b>Weekly permit services</b> — several times this price, refreshing weekly in a race measured in days.</p></div>
+        </div>
+      </div>
+      <div>
+        <div class="callout"><span style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.8">Sacramento · Measured</span><strong style="margin-top:12px">~1 in 5</strong><p style="font-size:18px;font-weight:600;color:#fff;margin:8px 0 6px">roofing filings arrive with no contractor attached yet.</p><p>Those are still-open jobs — visible in the morning digest while there's still time to be first. That's the whole race.</p><div style="border-top:1px solid rgba(255,255,255,.2);margin-top:18px;padding-top:16px;font-size:14px;opacity:.9">Scope note: measured in Sacramento, where the contractor field is available. We don't claim it metro-wide where we can't measure it.</div></div>
+        <div class="card" style="margin-top:16px"><h3 style="font-size:15px">What you're actually buying</h3><p><strong style="color:var(--ink)">Time back</strong> + <strong style="color:var(--ink)">first position</strong>. Not a bigger list — an earlier one, for your trade only.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SAMPLE DAY / MAP -->
+  <section id="sample" style="padding-top:8px">
+    <div class="sample"><div class="sample-in">
+      <div class="eyebrow" style="color:#f0a266">Sample day — one real day, illustrated</div>
+      <h2>Tuesday, November 10, 2026: 123 real filings.</h2>
+      <p style="max-width:640px">One ordinary day across Sacramento, Placer County, and Stockton, plotted the way the digest's map links lay it out. This is an illustration of one real day's filings — in the digest itself, every row carries its own one-tap map link. Use the filters to see the trade split.</p>
+      <div class="filter-btns" id="sampleFilters">
+        <button class="fbtn active" data-filter="all">All filings · 123</button>
+        <button class="fbtn" data-filter="roofing">Roofing · 22</button>
+        <button class="fbtn" data-filter="solar">Solar · 10</button>
+        <button class="fbtn" data-filter="hvac">HVAC · 32</button>
+        <button class="fbtn" data-filter="other">Other trades · 59</button>
+      </div>
+      <div class="sample-grid">
+        <div class="map-box" id="mapBox" aria-label="Stylised map illustration of sample day filings across the three coverage areas">
+          <span class="region" style="top:16px;left:16px">Placer County</span>
+          <span class="region" style="top:42%;left:38%">Sacramento</span>
+          <span class="region" style="bottom:16px;right:16px">Stockton</span>
+          <div id="pins"></div>
+          <div style="position:absolute;bottom:14px;left:16px;z-index:2;font-size:11px;color:#8aa39b;font-family:'IBM Plex Mono',monospace">STYLISED ILLUSTRATION — PIN POSITIONS ILLUSTRATIVE</div>
+        </div>
+        <div>
+          <div id="bars"></div>
+          <p id="sampleNote" style="font-size:14px;line-height:1.6;margin-top:8px">Plus water heaters, windows, remodels, and pools in the full digest. Every filing in the real feed carries its permit number, so you can pull the source record yourself and check us.</p>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:16px">
+            <a class="btn" href="#pricing" style="background:#fff;color:#111;min-height:48px">Start your free 14 days</a>
+            <span style="align-self:center;font-size:13px;color:#a7bab3">Trial = the real feed, not this sample</span>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </section>
+
+  <!-- NUMBERS -->
+  <section id="numbers">
+    <div class="sec-head"><div class="eyebrow">The numbers — measured, not rounded up</div><h2>We'll tell you the slow season plainly. You'll see it in the feed anyway.</h2></div>
+    <div class="num-grid">
+      <article class="card">
+        <h3>Roofing + solar: seasonal, honestly</h3>
+        <p>Across the year, roofing and solar together run about <strong style="color:var(--ink)">20 filings a day metro-wide on average</strong> — closer to 27 a day in the busy fall, about 15 a day in the winter trough.</p>
+        <div class="season">
+          <div class="season-col"><div class="season-bar" style="height:110px;background:var(--accent)"></div><b>~27 / day</b><span>Busy fall</span></div>
+          <div class="season-col"><div class="season-bar" style="height:82px;background:var(--accent2)"></div><b>~20 / day</b><span>Year average</span></div>
+          <div class="season-col"><div class="season-bar" style="height:62px;background:#9db8b1"></div><b>~15 / day</b><span>Winter trough</span></div>
+        </div>
+        <p style="font-size:12.5px;color:var(--muted);margin-top:14px">Seasonality measured across 165 days of Sacramento records plus metro test-week pulls.</p>
+      </article>
+      <article class="card">
+        <h3>HVAC doesn't do seasons</h3>
+        <p>Roughly <strong style="color:var(--ink)">17 filings a day across the metro, all year</strong> — about 11 a day in Sacramento alone, winter and summer alike. It's the steadiest feed we run.</p>
+        <div style="margin-top:22px;background:var(--teal-soft);border-radius:14px;padding:18px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline"><b style="font-size:28px">32 HVAC</b><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--muted)">ON THE SAMPLE DAY ALONE</span></div>
+          <p style="margin-top:8px;font-size:14px">The largest single trade on Nov 10 — ahead of roofing (22) and solar (10).</p>
+        </div>
+        <div style="margin-top:16px;padding:16px;border:1px dashed var(--line);border-radius:14px"><p style="font-size:14px;margin:0"><strong style="color:var(--ink)">For scale:</strong> shared-lead marketplaces sell a single roofing or HVAC lead — shared with several competitors — for $30–$60. This is $49 for a month of filings in your trade.</p></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section id="pricing">
+    <div class="sec-head"><div class="eyebrow">Pricing</div><h2>One trade. Whole coverage area. No county upsell.</h2><p>14-day free trial — the real feed, not a sample. Month to month, cancel anytime.</p><p style="margin-top:14px"><strong style="color:var(--ink)">Founding pricing: the first 10 subscribers lock in $49/mo for good.</strong></p><p style="margin-top:8px">At checkout you'll pick your trade (Roofing / Solar / HVAC), enter the ZIP codes you cover, and can add a separate email for digest delivery.</p></div>
+    <div class="price-grid">
+      <div class="price">
+        <div style="font-weight:800;letter-spacing:.06em;font-size:13px;text-transform:uppercase;color:var(--muted)">Monthly</div>
+        <div class="amt" style="margin-top:12px">$49<small>/mo per trade</small></div>
+        <p style="color:var(--ink2);font-size:14.5px">Sacramento · Placer County · Stockton — daily digest, one-tap map links, and ZIP filtering included.</p>
+        <ul class="checklist"><li>14-day free trial, real feed</li><li>Daily 6 AM digest for your trade</li><li>One-tap map link on every filing, ordered by street cluster</li><li>Cancel anytime — two clicks, no retention call</li></ul>
+        <a class="btn btn-primary" href="https://buy.stripe.com/8x25kC4KX9xa88wfkveZ200" target="_blank" rel="noopener" style="width:100%">Start free 14-day trial</a>
+        <p style="text-align:center;font-size:12.5px;color:var(--muted);margin:10px 0 0">14 days free · No card required to start · Cancel anytime</p>
+        <p style="text-align:center;font-size:12.5px;color:var(--muted);margin:8px 0 0">Covering two trades? Each trade is its own subscription — start one today, add the other anytime.</p>
+      </div>
+      <div class="price featured">
+        <span class="badge">2 months free</span>
+        <div style="font-weight:800;letter-spacing:.06em;font-size:13px;text-transform:uppercase;color:var(--accent)">Annual — best value</div>
+        <div class="amt" style="margin-top:12px">$490<small>/yr per trade</small></div>
+        <p style="color:var(--ink2);font-size:14.5px">Prepay the year and lock the founding rate. Same feed, same coverage — two months on us.</p>
+        <ul class="checklist"><li>Everything in Monthly</li><li>$490 once — vs. $588 paying monthly</li><li>Founding rate locked for the year</li><li>14-day free trial still applies first</li></ul>
+        <a class="btn" href="https://buy.stripe.com/5kQ5kCfpBcJmfAY3BNeZ201" target="_blank" rel="noopener" style="width:100%;background:var(--accent);color:#fff">Start free 14-day trial</a>
+        <p style="text-align:center;font-size:12.5px;color:var(--muted);margin:10px 0 0">14 days free · No card required to start · Cancel anytime</p>
+        <p style="text-align:center;font-size:12.5px;color:var(--muted);margin:10px 0 0">ZIP-exclusive territory tiers are planned once there's demand to ration — not sold yet, not promised here.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq">
+    <div class="sec-head"><div class="eyebrow">FAQ</div><h2>Straight answers, including the limits.</h2></div>
+    <div class="faq">
+      <details><summary>Where does the data come from?</summary><p>Public building-permit records, pulled nightly from the City of Sacramento, Placer County, and City of Stockton permit portals. Every listing shows its permit number, so you can pull the source record yourself and check us.</p></details>
+      <details><summary>How fresh is it, really?</summary><p>A permit filed Monday is in Tuesday morning's digest. These are application/file dates — you see the job when it's filed, before review and issuance, which is when it matters for getting in early. Compare: the city's open-data file trails the portal by about two to three weeks.</p></details>
+      <details><summary>What exactly is in each listing?</summary><p>Address, permit number, jurisdiction, scope (reroof, change-out, PV + storage…), status, and the permit's work description. One honest limit: the portals' public exports don't include contractor names or job values, and we don't dress the feed up with data we don't have.</p></details>
+      <details><summary>Do you sell homeowner phone numbers or emails?</summary><p>No. This is permit intelligence — what's being built, where, and what's involved. No homeowner contact lists, no call files. Reaching the homeowner is your craft; knowing the job exists before your competitors do is ours.</p></details>
+      <details><summary>Which trades and areas?</summary><p>Roofing, solar, and HVAC feeds. Coverage is the City of Sacramento, Placer County, and the City of Stockton, with more metro jurisdictions on the roadmap. Filter any feed by ZIP.</p></details>
+      <details><summary>How does the trial work?</summary><p>Fourteen days of the real daily digest, free — no card required to start. Near the end of the trial we'll email you a link to add a card and keep it going at $49/mo. If you don't add one, the feed simply pauses. You're never charged for a trial, and there's no retention department to call — cancel anytime in two clicks.</p></details>
+      <details><summary>Why not just check the permit portal myself?</summary><p>You can — it's public. It'll take you an evening a week across three portals that don't search by date or trade, or about $49 a month not to. Contractors who try us usually did the portal grind first.</p></details>
+    </div>
+  </section>
+
+  <section style="padding-top:6px"><div class="final">
+    <div class="eyebrow">Tomorrow morning · 6 AM</div>
+    <h2>Monday's filings are already out.<br>Tomorrow's don't have to pass you by.</h2>
+    <p style="color:var(--ink2);max-width:520px;margin:0 auto 22px">Start with 14 days of the real feed for your trade. If it doesn't earn its $49, cancel in two clicks.</p>
+    <a class="btn btn-primary" href="#pricing" style="min-height:56px;padding:0 28px;font-size:16px">Start your free 14 days →</a>
+    <p class="micro">$49/mo per trade after trial · $490/yr annual available · Cancel anytime</p>
+  </div></section>
+</main>
+
+<footer><div class="wrap foot">
+  <span><strong style="color:var(--ink)">FARACTA.</strong> Permit intelligence for contractors — Sacramento · Placer · Stockton</span>
+  <span>Faracta · Sacramento, California · <a href="mailto:hello@faracta.com" style="text-decoration:underline">hello@faracta.com</a></span>
+  <span>All figures on this page are measured from the real permit feed (sample day: Tue, Nov 10, 2026).</span>
+</div></footer>
+
+<script>
+const digestData={
+  roofing:[
+    {icon:"🏠",cls:"r",title:"Reroof — tear-off, 25 squares",desc:"Composition shingle · Status: Filed · Permit no. on listing",open:true},
+    {icon:"🏠",cls:"r",title:"Reroof — overlay + deck inspection",desc:"Scope and work description as filed in the portal",open:false},
+    {icon:"🏠",cls:"r",title:"Reroof — tile to comp conversion",desc:"Address, jurisdiction & full description in the digest",open:true},
+  ],
+  solar:[
+    {icon:"☀️",cls:"s",title:"PV system — 6.4 kW + storage",desc:"Rooftop PV with battery · Status: Filed",open:false},
+    {icon:"☀️",cls:"s",title:"PV system — 8.1 kW, roof mount",desc:"Scope and work description as filed in the portal",open:false},
+    {icon:"☀️",cls:"s",title:"PV + panel upgrade",desc:"Address, jurisdiction & full description in the digest",open:false},
+  ],
+  hvac:[
+    {icon:"❄️",cls:"h",title:"Change-out — 3-ton heat pump",desc:"Like-for-like replacement · Status: Filed",open:false},
+    {icon:"❄️",cls:"h",title:"Change-out — furnace + AC, 4-ton",desc:"Scope and work description as filed in the portal",open:false},
+    {icon:"❄️",cls:"h",title:"Ductwork + heat pump install",desc:"Address, jurisdiction & full description in the digest",open:false},
+  ]
+};
+const rowsEl=document.getElementById('digestRows');
+function renderDigest(key){
+  rowsEl.innerHTML=digestData[key].map(r=>`<div class="row"><div class="dot ${r.cls}">${r.icon}</div><div><b>${r.title}</b><p>${r.desc}</p>${r.open?'<span class="pill-open">Still open — no contractor attached</span>':''}</div><div class="row-meta"><span>FILED</span><span>YESTERDAY</span></div></div>`).join('');
+}
+renderDigest('roofing');
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));t.classList.add('active');renderDigest(t.dataset.tab);}));
+
+// Sample day bars + pins
+const totals={all:123,roofing:22,solar:10,hvac:32,other:59};
+const breakdown=[
+  {k:'roofing',label:'Roofing',n:22,color:'#f08a3c'},
+  {k:'solar',label:'Solar',n:10,color:'#facc15'},
+  {k:'hvac',label:'HVAC',n:32,color:'#7ec8bc'},
+  {k:'other',label:'Other — water heaters, windows, remodels, pools',n:59,color:'#94a3b8'},
+];
+const barsEl=document.getElementById('bars');
+function renderBars(filter){
+  barsEl.innerHTML=breakdown.map(b=>{
+    const dim = filter!=='all' && filter!==b.k;
+    const pct=Math.round(b.n/123*100);
+    return `<div class="bar-row" style="opacity:${dim?0.35:1}"><div class="bar-label"><b>${b.label}</b><span>${b.n} · ${pct}%</span></div><div class="bar"><i style="width:${pct*2.2}%;background:${b.color};max-width:100%"></i></div></div>`;
+  }).join('');
+}
+function renderPins(filter){
+  const pinsEl=document.getElementById('pins'); pinsEl.innerHTML='';
+  // deterministic pseudo-random positions
+  let seed=42; const rnd=()=>{seed=(seed*9301+49297)%233280;return seed/233280;};
+  const counts={all:44,roofing:16,solar:9,hvac:24,other:28};
+  const colors={roofing:'#f08a3c',solar:'#facc15',hvac:'#7ec8bc',other:'#94a3b8',all:'#fff'};
+  const n=counts[filter]||30;
+  for(let i=0;i<n;i++){
+    const d=document.createElement('span'); d.className='pin';
+    d.style.left=(6+rnd()*86)+'%'; d.style.top=(10+rnd()*76)+'%';
+    d.style.background= filter==='all' ? ['#f08a3c','#facc15','#7ec8bc','#94a3b8'][i%4] : colors[filter];
+    d.style.width=(filter==='all'?9:11)+'px'; d.style.height=d.style.width;
+    pinsEl.appendChild(d);
+  }
+}
+renderBars('all'); renderPins('all');
+document.querySelectorAll('#sampleFilters .fbtn').forEach(b=>b.addEventListener('click',()=>{
+  document.querySelectorAll('#sampleFilters .fbtn').forEach(x=>x.classList.remove('active')); b.classList.add('active');
+  renderBars(b.dataset.filter); renderPins(b.dataset.filter);
+  const note=document.getElementById('sampleNote');
+  const notes={all:"Plus water heaters, windows, remodels, and pools in the full digest. Every filing in the real feed carries its permit number, so you can pull the source record yourself and check us.",roofing:"22 roofing filings on the sample day. In Sacramento, about 1 in 5 arrived with no contractor attached yet — the still-open jobs.",solar:"10 solar filings on the sample day. Roofing + solar together average about 20/day metro-wide across the year.",hvac:"32 HVAC filings — the largest trade on the sample day, and the steadiest feed year-round at roughly 17/day metro-wide.",other:"59 other residential filings — water heaters, windows, remodels, and pools — included in the full digest."};
+  note.textContent=notes[b.dataset.filter];
+}));
+</script>
+</body>
+</html>
